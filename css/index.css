@@ -211,6 +211,13 @@ template {
 }
 .fontawesomeIcon,
 .custom-hr:before,
+.container h1:before,
+.container h2:before,
+.container h3:before,
+.container h4:before,
+.container h5:before,
+.container h6:before,
+.container hr:before,
 #post .post-copyright:before,
 #post #post-outdate-notice:before,
 .toggle > .toggle-button::before,
@@ -331,6 +338,7 @@ template {
   transition: all 0.3s ease-out;
 }
 .custom-hr,
+.container hr,
 .search-dialog hr {
   position: relative;
   margin: 40px auto;
@@ -338,10 +346,12 @@ template {
   width: calc(100% - 4px);
 }
 .custom-hr:hover:before,
+.container hr:hover:before,
 .search-dialog hr:hover:before {
   left: calc(95% - 20px);
 }
 .custom-hr:before,
+.container hr:before,
 .search-dialog hr:before {
   position: absolute;
   top: -10px;
@@ -5124,6 +5134,7 @@ figure.highlight pre .javascript .function {
 .container {
   word-wrap: break-word;
   overflow-wrap: break-word;
+  text-align: justify;
 }
 .container a {
   color: #49b1f5;
@@ -5182,6 +5193,113 @@ figure.highlight pre .javascript .function {
 }
 .container hr {
   margin: 20px 0;
+}
+.container h1,
+.container h2,
+.container h3,
+.container h4,
+.container h5,
+.container h6 {
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+.container h1:before,
+.container h2:before,
+.container h3:before,
+.container h4:before,
+.container h5:before,
+.container h6:before {
+  position: absolute;
+  top: calc(50% - 7px);
+  left: 0;
+  color: #f47466;
+  content: '\f0c1';
+  line-height: 1;
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+.container h1:hover:before,
+.container h2:hover:before,
+.container h3:hover:before,
+.container h4:hover:before,
+.container h5:hover:before,
+.container h6:hover:before {
+  color: #49b1f5;
+}
+.container h1 {
+  padding-left: 28px;
+}
+.container h1:before {
+  font-size: 18px;
+}
+.container h1:hover {
+  padding-left: 32px;
+}
+.container h2 {
+  padding-left: 26px;
+}
+.container h2:before {
+  font-size: 16px;
+}
+.container h2:hover {
+  padding-left: 30px;
+}
+.container h3 {
+  padding-left: 24px;
+}
+.container h3:before {
+  font-size: 14px;
+}
+.container h3:hover {
+  padding-left: 28px;
+}
+.container h4 {
+  padding-left: 22px;
+}
+.container h4:before {
+  font-size: 12px;
+}
+.container h4:hover {
+  padding-left: 26px;
+}
+.container h5 {
+  padding-left: 20px;
+}
+.container h5:before {
+  font-size: 10px;
+}
+.container h5:hover {
+  padding-left: 24px;
+}
+.container h6 {
+  padding-left: 20px;
+}
+.container h6:before {
+  font-size: 10px;
+}
+.container h6:hover {
+  padding-left: 24px;
+}
+.container ol p,
+.container ul p {
+  margin: 0 0 8px;
+}
+.container li::marker {
+  color: #49b1f5;
+  font-weight: 600;
+  font-size: 1.05em;
+}
+.container li:hover::marker {
+  color: var(--pseudo-hover);
+}
+.container ul > li {
+  list-style-type: circle;
 }
 #post .tag_share:after {
   display: block;
@@ -5497,6 +5615,94 @@ figure.highlight pre .javascript .function {
     display: none;
   }
 }
+#rightside #go-up {
+  position: relative;
+}
+#rightside #go-up .scroll-percent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  -webkit-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  -moz-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  -o-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  -ms-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-transform: scale(0.8);
+  -moz-transform: scale(0.8);
+  -o-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  transform: scale(0.8);
+}
+#rightside #go-up i {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+  -webkit-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  -moz-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  -o-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  -ms-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -o-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
+#rightside #go-up.show-percent .scroll-percent {
+  display: block;
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -o-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  -webkit-animation: fadeInScale 0.4s ease-out;
+  -moz-animation: fadeInScale 0.4s ease-out;
+  -o-animation: fadeInScale 0.4s ease-out;
+  -ms-animation: fadeInScale 0.4s ease-out;
+  animation: fadeInScale 0.4s ease-out;
+}
+#rightside #go-up.show-percent i {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  -webkit-transform: scale(0.8);
+  -moz-transform: scale(0.8);
+  -o-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  transform: scale(0.8);
+}
+#rightside #go-up:hover.show-percent .scroll-percent {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  -webkit-transform: scale(0.8);
+  -moz-transform: scale(0.8);
+  -o-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  transform: scale(0.8);
+}
+#rightside #go-up:hover.show-percent i {
+  opacity: 1 !important;
+  -ms-filter: none !important;
+  filter: none !important;
+  -webkit-transform: scale(1) !important;
+  -moz-transform: scale(1) !important;
+  -o-transform: scale(1) !important;
+  -ms-transform: scale(1) !important;
+  transform: scale(1) !important;
+}
 @-moz-keyframes fadeInScale {
   from {
     opacity: 0;
@@ -5801,6 +6007,20 @@ figure.highlight pre .javascript .function {
 }
 .container .aplayer {
   margin: 0 0 20px;
+}
+.container .aplayer ol,
+.container .aplayer ul {
+  margin: 0;
+  padding: 0;
+}
+.container .aplayer ol li,
+.container .aplayer ul li {
+  margin: 0;
+  padding: 0 15px;
+}
+.container .aplayer ol li:before,
+.container .aplayer ul li:before {
+  content: none;
 }
 .snackbar-container.snackbar-css {
   border-radius: 5px;
