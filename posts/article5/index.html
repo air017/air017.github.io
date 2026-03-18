@@ -1,0 +1,315 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Linux搭建个人博客(Hexo+Github Pages) | air017</title><meta name="author" content="air017"><meta name="copyright" content="air017"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="环境介绍软件：VMware Workstation 系统：Centos 7 网络连接模式：桥接 网络连接模式可以根据个人需求进行设置，但一定不能选择是仅主机模式，如果后续不考虑上线项目，可以考虑使用仅主机模式   网络配置桥接主要通过路由器进行DHCP地址下发 1234567891011# 修改网络配置文件，设置开机自启动vi &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux搭建个人博客(Hexo+Github Pages)">
+<meta property="og:url" content="https://air017.github.io/posts/article5/index.html">
+<meta property="og:site_name" content="air017">
+<meta property="og:description" content="环境介绍软件：VMware Workstation 系统：Centos 7 网络连接模式：桥接 网络连接模式可以根据个人需求进行设置，但一定不能选择是仅主机模式，如果后续不考虑上线项目，可以考虑使用仅主机模式   网络配置桥接主要通过路由器进行DHCP地址下发 1234567891011# 修改网络配置文件，设置开机自启动vi &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcf">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://air017.github.io/img/avater.png">
+<meta property="article:published_time" content="2026-03-18T07:52:07.000Z">
+<meta property="article:modified_time" content="2026-03-18T09:08:51.824Z">
+<meta property="article:author" content="air017">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://air017.github.io/img/avater.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Linux搭建个人博客(Hexo+Github Pages)",
+  "url": "https://air017.github.io/posts/article5/",
+  "image": "https://air017.github.io/img/avater.png",
+  "datePublished": "2026-03-18T07:52:07.000Z",
+  "dateModified": "2026-03-18T09:08:51.824Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "air017",
+      "url": "https://air017.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://air017.github.io/posts/article5/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e8a9f1fb63d4d14d8d50041360a0de2e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Linux搭建个人博客(Hexo+Github Pages)',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avater.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa-solid fa-ghost"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/back.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">air017</span></a><a class="nav-page-title" href="/"><span class="site-name">Linux搭建个人博客(Hexo+Github Pages)</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa-solid fa-ghost"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Linux搭建个人博客(Hexo+Github Pages)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon fas fa-history"></i><span class="post-meta-label">更新于</span><time datetime="2026-03-18T09:08:51.824Z" title="更新于 2026-03-18 17:08:51">2026-03-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Hexo/">Hexo</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="环境介绍"><a href="#环境介绍" class="headerlink" title="环境介绍"></a>环境介绍</h2><p>软件：VMware Workstation</p>
+<p>系统：Centos 7</p>
+<p>网络连接模式：桥接</p>
+<div class="note blue icon-padding flat"><i class="note-icon fas fa-bullhorn"></i><p>网络连接模式可以根据个人需求进行设置，但一定不能选择是仅主机模式，如果后续不考虑上线项目，可以考虑使用仅主机模式</p>
+</div>
+
+<h2 id="网络配置"><a href="#网络配置" class="headerlink" title="网络配置"></a>网络配置</h2><p>桥接主要通过路由器进行DHCP地址下发</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改网络配置文件，设置开机自启动</span></span><br><span class="line">vi /etc/sysconfig/network-scripts/ifcfg-ens33</span><br><span class="line"></span><br><span class="line">修改内容:</span><br><span class="line">ONBOOT=<span class="built_in">yes</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启网络服务</span></span><br><span class="line">systemctl restart network</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看IP地址</span></span><br><span class="line">ip a</span><br></pre></td></tr></table></figure>
+
+<h2 id="更换yum源"><a href="#更换yum源" class="headerlink" title="更换yum源"></a>更换yum源</h2><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>原来的yum源仓库在国外，网络连接不稳定直接导致无法获取yum源库内容，返回报错信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 无法获取yum库内容出现的报错</span></span><br><span class="line">已加载插件：fastestmirror</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line">Could not retrieve mirrorlist http://mirrorlist.centos.org/?release=7&amp;<span class="built_in">arch</span>=x86_64&amp;repo=os&amp;infra=stock error was</span><br><span class="line">14: curl#6 - <span class="string">&quot;Could not resolve host: mirrorlist.centos.org; 未知的错误&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="备份源文件"><a href="#备份源文件" class="headerlink" title="备份源文件"></a>备份源文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/yum.repo.d</span><br><span class="line"><span class="built_in">cp</span> -p CentOS-Base.repo CentOS-Base.repo.bak</span><br></pre></td></tr></table></figure>
+
+<h3 id="更换国内镜像源"><a href="#更换国内镜像源" class="headerlink" title="更换国内镜像源"></a>更换国内镜像源</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用wget命令获取</span></span><br><span class="line">wget -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 若wget命令无法使用，使用curl命令获取</span></span><br><span class="line">curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 出现类似以下信息则下载成功</span></span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100  2523  100  2523    0     0  14734      0 --:--:-- --:--:-- --:--:-- 14668</span><br></pre></td></tr></table></figure>
+
+<h3 id="加载新源"><a href="#加载新源" class="headerlink" title="加载新源"></a>加载新源</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 清除缓存</span></span><br><span class="line">yum clean all</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建元数据</span></span><br><span class="line">yum makecache</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看源列表</span></span><br><span class="line">yum repolist</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试安装"><a href="#测试安装" class="headerlink" title="测试安装"></a>测试安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y vim</span><br></pre></td></tr></table></figure>
+
+<h2 id="搭建博客网站"><a href="#搭建博客网站" class="headerlink" title="搭建博客网站"></a>搭建博客网站</h2><h3 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h3><h4 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h4><p>方法一：通过源库(apt)进行安装，通常推荐使用的是Debian&#x2F;Ubuntu等发行版</p>
+<p>方法二：通过下载对应版本的压缩包，进行解压，对其进行编译</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取对应的git版本，这里使用git-2.32.7</span></span><br><span class="line">wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.32.7.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解压压缩包</span></span><br><span class="line">tar -zxvf git-2.32.7.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line">yum -y install curl-devel expat-devel gettext-devel openssl-devel zlib-devel gcc perl-ExtUtils-MakeMaker</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查是否有旧版本的git</span></span><br><span class="line">yum list git</span><br><span class="line"><span class="comment">## 有则卸载</span></span><br><span class="line">yum remove</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进行编译</span></span><br><span class="line"><span class="built_in">cd</span> [git目录]</span><br><span class="line">make install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证编译版本</span></span><br><span class="line">git --version</span><br><span class="line">// 查看出现的版本号是否与压缩包的一致</span><br></pre></td></tr></table></figure>
+
+<mark class="hl-label orange">解决版本号不一致的问题</mark>
+
+<p>由于&#x2F;usr&#x2F;bin中自带一个老版本的git，需要移除原来的git，并修改环境变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 卸载老版本的git</span></span><br><span class="line">yum remove git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改环境变量</span></span><br><span class="line">vim /etc/profile</span><br><span class="line">添加内容：</span><br><span class="line"><span class="comment"># git-2.32.7</span></span><br><span class="line"><span class="built_in">export</span> GIT_HOME=/opt/soft/git-2.32.7</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$GIT_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 生效配置文件</span></span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证git版本号</span></span><br><span class="line">git --version</span><br></pre></td></tr></table></figure>
+
+<div class="note blue icon-padding flat"><i class="note-icon fas fa-bullhorn"></i><p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30169753/article/details/118329985?ops_request_misc=elastic_search_misc&request_id=ea9d4c77c0e101518dd3a781c0c654cd&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~baidu_landing_v2~default-6-118329985-null-null.142%5Ev102%5Epc_search_result_base9&utm_term=centos7%E4%B8%8B%E8%BD%BDgit&spm=1018.2226.3001.4187">Centos7两种方式安装git</a></p>
+</div>
+
+<h4 id="安装Nodejs"><a href="#安装Nodejs" class="headerlink" title="安装Nodejs"></a>安装Nodejs</h4><p>通过<code>rpm -qa | grep npm</code>得知yum库中没有该软件</p>
+<p>1、下载nodejs软件，选择最新版本中的长期支持版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装wget(配置好yum源后才能安装)</span></span><br><span class="line">yum install -y wget</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载nodejs安装包</span></span><br><span class="line">wget https://nodejs.org/dist/latest-v16.x/node-v16.20.2-linux-x64.tar.xz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解压安装包</span></span><br><span class="line">tar -xvJf /opt/soft/node-v16.20.2-linux-x64.tar.xz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 目录重命名</span></span><br><span class="line"><span class="built_in">mv</span> node-v16.20.2-linux-x64 node-v16.20.2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编写配置文件</span></span><br><span class="line">vim /etc/profile</span><br><span class="line"></span><br><span class="line">添加内容：</span><br><span class="line"><span class="comment"># nodejs</span></span><br><span class="line"><span class="built_in">export</span> NODEJS_HOME=/opt/soft/node-v16.20.2</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$NODEJS_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 生效配置文件</span></span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证配置文件</span></span><br><span class="line">npm -v</span><br><span class="line">终端输出：</span><br><span class="line">8.19.4</span><br><span class="line">node -v</span><br><span class="line">终端输出：</span><br><span class="line">v16.20.2</span><br></pre></td></tr></table></figure>
+
+<p>2、安装cnpm</p>
+<p>npm的服务器在国外，获取资源的速度会很慢，淘宝提供了一个npm的镜像，可以提高安装的速度</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法一：下载cnpm</span></span><br><span class="line">npm install -g cnpm --registry=https://registry.npmmirror.com</span><br><span class="line">// 出现added 1 package <span class="keyword">in</span> 7s证明正在获取资源</span><br><span class="line"></span><br><span class="line">// 验证cnpm</span><br><span class="line">cnpm -v</span><br><span class="line">输出结果：</span><br><span class="line">cnpm@9.4.0 (/opt/soft/node-v16.20.2/lib/node_modules/cnpm/lib/parse_argv.js)</span><br><span class="line">npm@9.9.2 (/opt/soft/node-v16.20.2/lib/node_modules/cnpm/node_modules/npm/index.js)</span><br><span class="line">node@16.20.2 (/opt/soft/node-v16.20.2/bin/node)</span><br><span class="line">npminstall@7.12.0 (/opt/soft/node-v16.20.2/lib/node_modules/cnpm/node_modules/npminstall/lib/index.js)</span><br><span class="line">prefix=/opt/soft/node-v16.20.2 </span><br><span class="line">linux x64 3.10.0-957.el7.x86_64 </span><br><span class="line">registry=https://registry.npmmirror.com</span><br><span class="line"></span><br><span class="line">// 使用cnpm替代npm安装；</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二：替代npm的源</span></span><br><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br><span class="line"></span><br><span class="line">// 查看npm的镜像</span><br><span class="line">npm config get registry</span><br></pre></td></tr></table></figure>
+
+<div class="note blue icon-padding flat"><i class="note-icon fas fa-bullhorn"></i><p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Yanci_/article/details/80059516?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_utm_term~default-4-80059516-blog-144756905.235%5Ev43%5Epc_blog_bottom_relevance_base5&spm=1001.2101.3001.4242.3&utm_relevant_index=7">安装淘宝npm镜像(cnpm)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lklalmq/article/details/144756905?ops_request_misc=elastic_search_misc&request_id=3957d135f5264e428e09296bc1d24054&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-144756905-null-null.142%5Ev102%5Epc_search_result_base9&utm_term=centos7%E4%B8%8B%E8%BD%BDnpm&spm=1018.2226.3001.4187">Centos7下载npm</a></p>
+</div>
+
+<h4 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h4><p>1、安装hexo框架</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用cnpm安装hexo客户端</span></span><br><span class="line">cnpm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<p>2、初始化hexo</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装hexo</span></span><br><span class="line">npm install -g hexo</span><br><span class="line"></span><br><span class="line">输出结果：</span><br><span class="line">npm WARN EBADENGINE Unsupported engine &#123;</span><br><span class="line">npm WARN EBADENGINE   package: <span class="string">&#x27;hexo@8.1.1&#x27;</span>,</span><br><span class="line">npm WARN EBADENGINE   required: &#123; node: <span class="string">&#x27;&gt;=20.19.0&#x27;</span> &#125;,</span><br><span class="line">npm WARN EBADENGINE   current: &#123; node: <span class="string">&#x27;v16.20.2&#x27;</span>, npm: <span class="string">&#x27;8.19.4&#x27;</span> &#125;</span><br><span class="line">npm WARN EBADENGINE &#125;</span><br><span class="line">npm WARN EBADENGINE Unsupported engine &#123;</span><br><span class="line">npm WARN EBADENGINE   package: <span class="string">&#x27;abbrev@3.0.1&#x27;</span>,</span><br><span class="line">npm WARN EBADENGINE   required: &#123; node: <span class="string">&#x27;^18.17.0 || &gt;=20.5.0&#x27;</span> &#125;,</span><br><span class="line">npm WARN EBADENGINE   current: &#123; node: <span class="string">&#x27;v16.20.2&#x27;</span>, npm: <span class="string">&#x27;8.19.4&#x27;</span> &#125;</span><br><span class="line">npm WARN EBADENGINE &#125;</span><br><span class="line">npm WARN EBADENGINE Unsupported engine &#123;</span><br><span class="line">npm WARN EBADENGINE   package: <span class="string">&#x27;hexo-fs@5.0.1&#x27;</span>,</span><br><span class="line">npm WARN EBADENGINE   required: &#123; node: <span class="string">&#x27;&gt;=18&#x27;</span> &#125;,</span><br><span class="line">npm WARN EBADENGINE   current: &#123; node: <span class="string">&#x27;v16.20.2&#x27;</span>, npm: <span class="string">&#x27;8.19.4&#x27;</span> &#125;</span><br><span class="line">npm WARN EBADENGINE &#125;</span><br><span class="line">npm WARN EBADENGINE Unsupported engine &#123;</span><br><span class="line">npm WARN EBADENGINE   package: <span class="string">&#x27;hexo-util@4.0.0&#x27;</span>,</span><br><span class="line">npm WARN EBADENGINE   required: &#123; node: <span class="string">&#x27;&gt;=18&#x27;</span> &#125;,</span><br><span class="line">npm WARN EBADENGINE   current: &#123; node: <span class="string">&#x27;v16.20.2&#x27;</span>, npm: <span class="string">&#x27;8.19.4&#x27;</span> &#125;</span><br><span class="line">npm WARN EBADENGINE &#125;</span><br><span class="line">npm WARN EBADENGINE Unsupported engine &#123;</span><br><span class="line">npm WARN EBADENGINE   package: <span class="string">&#x27;warehouse@6.0.0&#x27;</span>,</span><br><span class="line">npm WARN EBADENGINE   required: &#123; node: <span class="string">&#x27;&gt;=18&#x27;</span> &#125;,</span><br><span class="line">npm WARN EBADENGINE   current: &#123; node: <span class="string">&#x27;v16.20.2&#x27;</span>, npm: <span class="string">&#x27;8.19.4&#x27;</span> &#125;</span><br><span class="line">npm WARN EBADENGINE &#125;</span><br></pre></td></tr></table></figure>
+
+<div class="note orange icon-padding flat"><i class="note-icon fas fa-battery-half"></i><p><code>node</code>和<code>npm</code>的版本需要符合输出信息中的要求，不然会出现不兼容的情况<br>由于<code>Centos7</code>发行版不支持高版本的<code>nodejs</code>，所以后面可以切换使用Windows系统去搭建或使用其他Linux发行版（如：<code>Ubuntu</code>,<code>Fedora</code>,<code>Archlinux</code>等）<br>在<code>Centos7</code>中能够安装到旧版本的<code>Hexo</code>框架就可以解决</p>
+</div>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在项目的根目录下(/opt/myblog)安装hexo v7.3.0版本</span></span><br><span class="line">npm install hexo@7.3.0</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化hexo</span></span><br><span class="line">// 切换到网站目录想要存放的目录中</span><br><span class="line"><span class="built_in">cd</span> /opt/myblog</span><br><span class="line">// 进行初始化</span><br><span class="line">hexo init blog</span><br><span class="line"></span><br><span class="line">// 由于服务器在虚拟机中，需要访问虚拟机的4000端口，所以为确保正常访问，需要配置防火墙或关闭防火墙</span><br><span class="line"><span class="comment">## 方法一：直接关闭防火墙(简单粗暴)</span></span><br><span class="line">systemctl stop firwalld</span><br><span class="line">// 关闭防火墙开机自启动</span><br><span class="line">systemctl <span class="built_in">disable</span> firewalld</span><br><span class="line"></span><br><span class="line"><span class="comment">## 方法二：设置防火墙，开放4000端口</span></span><br><span class="line">firewall-cmd --permanent --add-port=4000/tcp</span><br><span class="line">// 重启防火墙</span><br><span class="line">firewall-cmd --reload</span><br><span class="line">// 查看防火墙规则</span><br><span class="line">firewall-cmd --list-all</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换到blog目录中</span></span><br><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">hexo s		// 开启运行</span><br><span class="line">hexo v		// 查看hexo框架的版本</span><br></pre></td></tr></table></figure>
+
+<h3 id="项目上线"><a href="#项目上线" class="headerlink" title="项目上线"></a>项目上线</h3><mark class="hl-label orange"><u>参考链接：</u></mark>
+
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xango/p/18909673">超详细Hexo+Github Pages搭建个人博客教程</a></p>
+<p><a target="_blank" rel="noopener" href="https://yuanyueyao.github.io/2025/03/12/hexo-github-%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2/">hexo-github-个人博客部署</a></p>
+<h4 id="1、安装Git部署插件"><a href="#1、安装Git部署插件" class="headerlink" title="1、安装Git部署插件"></a>1、安装Git部署插件</h4><p>用于将生成的静态文件推送到Github:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、修改博客配置文件"><a href="#2、修改博客配置文件" class="headerlink" title="2、修改博客配置文件"></a>2、修改博客配置文件</h4><p>修改项目根目录下的<code>_config.yml</code>文件，修改或添加<code>depoly</code>部分的内容</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加或修改内容</span></span><br><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/air017/air017.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span>      <span class="comment"># 取决于Github Pages的分支设置</span></span><br><span class="line">  <span class="comment"># 自定义提交信息(可选)</span></span><br><span class="line">  <span class="attr">message:</span> <span class="string">&quot;部署Hexo博客，更新于$(date &#x27;+%Y-%m-%d %H:%M:%S&#x27;)&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3、生成静态文件并部署到Github"><a href="#3、生成静态文件并部署到Github" class="headerlink" title="3、生成静态文件并部署到Github"></a>3、生成静态文件并部署到Github</h4><p>生成静态文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g</span><br></pre></td></tr></table></figure>
+
+<p>部署到Github上</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<div class="note blue icon-padding flat"><i class="note-icon fas fa-bullhorn"></i><p>首次部署需要验证身份，根据代码输出结果的提示进行身份验证</p>
+</div>
+
+<h4 id="可选-4、编写自动化部署脚本"><a href="#可选-4、编写自动化部署脚本" class="headerlink" title="(可选)4、编写自动化部署脚本"></a>(可选)4、编写自动化部署脚本</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">vim depoly.sh</span><br><span class="line">脚本内容：</span><br><span class="line"><span class="meta prompt_">	#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">自动化部署项目</span></span><br><span class="line"><span class="meta prompt_">	#</span><span class="language-bash"><span class="comment"># 清理旧文件</span></span></span><br><span class="line">	hexo clean</span><br><span class="line"><span class="meta prompt_">	#</span><span class="language-bash"><span class="comment"># 生成新文件</span></span></span><br><span class="line">	hexo g</span><br><span class="line"><span class="meta prompt_">	#</span><span class="language-bash"><span class="comment"># 部署到Github Pages</span></span></span><br><span class="line">	hexo d</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对文件进行授权</span></span><br><span class="line"><span class="built_in">chmod</span> +x depoly.sh</span><br></pre></td></tr></table></figure>
+
+<div class="note red icon-padding flat"><i class="note-icon fa-solid fa-bookmark"></i><p>自动化脚本要存放在项目的根目录中</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://air017.github.io">air017</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://air017.github.io/posts/article5/">https://air017.github.io/posts/article5/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://air017.github.io" target="_blank">air017</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a><a class="post-meta__tags" href="/tags/Hexo/">Hexo</a></div><div class="post-share"><div class="social-share" data-image="/img/avater.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/posts/article4/" title="SSH服务调整配置文件后服务重启失败"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">SSH服务调整配置文件后服务重启失败</div></div><div class="info-2"><div class="info-item-1">报错图示 可能是受到SELinux安全策略、防火墙的影响 一、禁用SELinux临时禁用 1setenforce 0  更改配置文件实现永久禁用 1sed -i &quot;s/^SELINUX=enforcing/SELINUX=disabled&quot;  查看SELinux状态 1sestatus  由于临时禁用在关闭虚拟机后，设置就失效了；更改配置文件可能需要重启虚拟机才能够生效，可以将两条命令结合使用     二、设置防火墙1、关闭防火墙 12systemctl stop firewalldsystemctl disable firewalld  2、添加防火墙规则，允许开放端口号2222 123firewall-cmd --permanent --add-port=2222/tcpfirewall-cmd --reloadfirewall-cmd --list-all</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/article4/" title="SSH服务调整配置文件后服务重启失败"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-21</div><div class="info-item-2">SSH服务调整配置文件后服务重启失败</div></div><div class="info-2"><div class="info-item-1">报错图示 可能是受到SELinux安全策略、防火墙的影响 一、禁用SELinux临时禁用 1setenforce 0  更改配置文件实现永久禁用 1sed -i &quot;s/^SELINUX=enforcing/SELINUX=disabled&quot;  查看SELinux状态 1sestatus  由于临时禁用在关闭虚拟机后，设置就失效了；更改配置文件可能需要重启虚拟机才能够生效，可以将两条命令结合使用     二、设置防火墙1、关闭防火墙 12systemctl stop firewalldsystemctl disable firewalld  2、添加防火墙规则，允许开放端口号2222 123firewall-cmd --permanent --add-port=2222/tcpfirewall-cmd --reloadfirewall-cmd --list-all</div></div></div></a><a class="pagination-related" href="/posts/article2/" title="Linux挂载镜像通用版"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-30</div><div class="info-item-2">Linux挂载镜像通用版</div></div><div class="info-2"><div class="info-item-1">centos挂载本地镜像确认CD是否打开 1、使用挂载命令提取镜像文件 12345[root@localhost ~]# mount /dev/sr0 /mnt/mount: /dev/sr0 写保护，将以只读方式挂载[root@localhost ~]# ls /mnt/CentOS_BuildTag  EULA  images    LiveOS    repodata              RPM-GPG-KEY-CentOS-Testing-7EFI              GPL   isolinux  Packages  RPM-GPG-KEY-CentOS-7  TRANS.TBL  2、将原本系统中的yum库中的文件全部删除 12[root@localhost ~]# cd /etc/yum.repos.d/[root@localhost yum.repos.d]# rm -rf ./  3、由于使用挂载命令只是临时提取镜像文件，所以需要在本地创建一个新的目录进行存储 1234567891011121314151617181920212223# 递归创建目录...</div></div></div></a><a class="pagination-related" href="/posts/article3/" title="CentOS7命令界面转图形界面"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-31</div><div class="info-item-2">CentOS7命令界面转图形界面</div></div><div class="info-2"><div class="info-item-1">在命令行界面中使用root用户当命令行界面的开头出现[root@192~]#时，则说明已经使用root用户登录系统 配置网络12345678910[root@localhost ~]# ip a    (查看网卡)1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00    inet 127.0.0.1/8 scope host lo       valid_lft forever preferred_lft forever    inet6 ::1/128 scope host        valid_lft forever preferred_lft forever2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">环境介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">网络配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%8D%A2yum%E6%BA%90"><span class="toc-number">3.</span> <span class="toc-text">更换yum源</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">3.1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD%E6%BA%90%E6%96%87%E4%BB%B6"><span class="toc-number">3.2.</span> <span class="toc-text">备份源文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%8D%A2%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E6%BA%90"><span class="toc-number">3.3.</span> <span class="toc-text">更换国内镜像源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E6%96%B0%E6%BA%90"><span class="toc-number">3.4.</span> <span class="toc-text">加载新源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E5%AE%89%E8%A3%85"><span class="toc-number">3.5.</span> <span class="toc-text">测试安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99"><span class="toc-number">4.</span> <span class="toc-text">搭建博客网站</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="toc-number">4.1.</span> <span class="toc-text">软件安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Git"><span class="toc-number">4.1.1.</span> <span class="toc-text">安装Git</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Nodejs"><span class="toc-number">4.1.2.</span> <span class="toc-text">安装Nodejs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Hexo"><span class="toc-number">4.1.3.</span> <span class="toc-text">安装Hexo</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E4%B8%8A%E7%BA%BF"><span class="toc-number">4.2.</span> <span class="toc-text">项目上线</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81%E5%AE%89%E8%A3%85Git%E9%83%A8%E7%BD%B2%E6%8F%92%E4%BB%B6"><span class="toc-number">4.2.1.</span> <span class="toc-text">1、安装Git部署插件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81%E4%BF%AE%E6%94%B9%E5%8D%9A%E5%AE%A2%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">4.2.2.</span> <span class="toc-text">2、修改博客配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E7%94%9F%E6%88%90%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E5%B9%B6%E9%83%A8%E7%BD%B2%E5%88%B0Github"><span class="toc-number">4.2.3.</span> <span class="toc-text">3、生成静态文件并部署到Github</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E9%80%89-4%E3%80%81%E7%BC%96%E5%86%99%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC"><span class="toc-number">4.2.4.</span> <span class="toc-text">(可选)4、编写自动化部署脚本</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background-image: url(/img/back.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By air017</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div><div class="footer_custom_text">Welcome to my <a href="https://air017.github.io/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="/js/tw_cn.js?v=5.5.4"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  const initGitalk = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGitalk = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const gitalk = new Gitalk({
+      clientID: 'Ov23li8xbsPvc97tH3CI',
+      clientSecret: '98bbc5c50c86b5cbc081d4b69e2d677067def50f',
+      repo: 'air017.github.io',
+      owner: 'air017',
+      admin: ['air017'],
+      updateCountCallback: commentCount,
+      ...option,
+      id: isShuoshuo ? path : (option && option.id) || '6c0eb7d98164211863c70129ae614155'
+    })
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async(el, path) => {
+    if (typeof Gitalk === 'function') initGitalk(el, path)
+    else {
+      await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.css')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js')
+      initGitalk(el, path)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Gitalk' === 'Gitalk'
+      ? window.shuoshuoComment = { loadComment: loadGitalk }
+      : window.loadOtherComment = loadGitalk
+    return
+  }
+
+  if ('Gitalk' === 'Gitalk' || !false) {
+    if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-fluttering-ribbon.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/click-show-text.min.js" data-mobile="false" data-text="HAVE,A,GOOD,DAY,UP,UP" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
